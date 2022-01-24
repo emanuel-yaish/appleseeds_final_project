@@ -1,0 +1,102 @@
+.profile {
+  display: flex;
+  background-color: var(--profile-color);
+  box-shadow: 0.2rem 0.4rem 0.8rem black;
+  border: 2px solid white;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  transform: translate(-5rem, -2rem);
+  box-shadow: 0.2rem 0.4rem 0.8rem black;
+  border: 2px solid black;
+}
+
+.profile-container {
+  padding: 2rem 2rem 2rem 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-more-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.profile-info,
+.profile-hobbies {
+  display: flex;
+  align-items: center;
+}
+
+.profile-info div,
+.profile-hobbies div {
+  margin: 0 1rem;
+  font-size: 2rem;
+}
+
+.profile-info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-shadow: 0.1rem 0.1rem black;
+}
+
+.profile-info-item div {
+  width: max-content;
+}
+.profile-info-item label {
+  color: #cddeff;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.profile-user-name {
+  transform: translateX(-6rem);
+  font-size: 5rem;
+  text-shadow: 0.2rem 0.2rem black;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  text-transform: capitalize;
+}
+
+.profile-first-name {
+  transform: translateX(-2rem);
+}
+
+.profile-about {
+  font-size: 1.5rem;
+  max-width: 70%;
+}
+
+.profile-section-label {
+  text-transform: uppercase;
+  color: var(--profile-title);
+  text-shadow: 0.1rem 0.1rem 0.2rem black;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  font-weight: 600;
+}
+
+.profile-buttons-container {
+  margin: 3rem 0 0rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile-buttons-container img {
+  width: 5rem;
+}
+
+.profile-button {
+  background-color: transparent;
+  border: none;
+}
+
+.profile-button img:hover {
+  -webkit-filter: grayscale(100%) brightness(110%) contrast(0.9);
+  filter: grayscale(100%) brightness(110%) contrast(0.9);
+}

@@ -1,0 +1,27 @@
+.costum-input-container {
+  margin: 2rem 0;
+}
+
+.costum-input {
+  width: 100%;
+  padding: 1rem 0;
+  border: 0.2rem solid transparent;
+  border-bottom: 0.2rem solid #797979;
+}
+
+.costum-input::placeholder {
+  text-transform: uppercase;
+}
+
+.costum-input:focus-visible {
+  outline: none;
+}
+
+.costum-input-label {
+  font-size: 1.4rem;
+  color: var(--gray);
+}
+
+input[type="date"] {
+  color: var(--gray);
+}

@@ -1,0 +1,10 @@
+.text-area-label {
+  display: block;
+  font-size: 1.4rem;
+  color: var(--gray);
+  margin: 1rem 0;
+}
+
+.text-area {
+  width: 100%;
+}

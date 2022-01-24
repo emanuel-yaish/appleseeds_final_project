@@ -1,0 +1,61 @@
+.new-profile-page {
+  min-height: 100vh;
+  padding: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #d31027; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ea384d,
+    #d31027
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ea384d,
+    #d31027
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.form-container {
+  padding: 4rem 5rem;
+  box-shadow: 2px 4px 8px;
+  background-color: var(--form-color);
+}
+
+.form-title {
+  font-size: 3rem;
+  color: var(--step-button);
+  margin: 1rem 0;
+}
+.form-title-black {
+  color: black;
+}
+
+.form-intro {
+  font-size: 2rem;
+}
+
+.form-instruction-container {
+  margin: 2rem 0;
+  font-size: 1.5rem;
+  color: var(--gray);
+}
+
+.form-button-container {
+  margin-top: 2rem;
+}
+
+.form-button {
+  width: 100%;
+  color: var(--form-color);
+  background-color: var(--step-button);
+  padding: 1.5rem 0;
+  border: none;
+  box-shadow: 2px 4px 8px black;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.form-button:active {
+  box-shadow: none;
+}

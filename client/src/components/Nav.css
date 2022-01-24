@@ -1,0 +1,14 @@
+.nav {
+  display: flex;
+  height: 6vh;
+  width: 100%;
+  z-index: 1;
+  position: fixed;
+  box-shadow: 0.2rem 0.4rem 0.8rem black;
+  align-items: center;
+}
+
+.logo {
+  color: var(--white-text);
+  font-size: 2rem;
+}

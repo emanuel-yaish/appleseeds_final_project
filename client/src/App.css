@@ -1,0 +1,46 @@
+/* Colors */
+
+:root {
+  --pink: #ff5959;
+  --link: #e9dddd;
+  --gray: gray;
+  --nav-color: #0399d8;
+  --profiles-page: #781c68;
+  --profile-color: #676fa3;
+  --profile-text: #eef2ff;
+  --profile-title: #fe8f8f;
+  --step-button: #ff0220;
+  --step-button-background: #ff829146;
+  --form-color: #ffffff;
+  --heart-active-color: #e44;
+  --heart-inactive-color: #bdbdbd;
+  --white-text: #ffffff;
+}
+
+/* CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Elements */
+html {
+  font-size: 62.5%; /* font-size 1em = 10px on default browser settings */
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.App {
+  width: 100vw;
+}
+
+.medium-margin {
+  margin: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
