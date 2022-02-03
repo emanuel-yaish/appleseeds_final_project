@@ -20,4 +20,14 @@ app.get("*", (req, res) => {
   res.sendFile(publicPath);
 });
 
+app.use((err, req, res, next) => {
+  err.statusCode = err.statusCode || 500;
+  err.status = err.status || "error";
+
+  res.status(err.status).send({
+    status: err.status,
+    message: err.message,
+  });
+});
+
 module.exports = app;
