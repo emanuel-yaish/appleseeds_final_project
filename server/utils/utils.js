@@ -1,9 +1,8 @@
-const Account = require("../models/accountModel");
+const User = require("../models/userModel");
 
-const getAccountById = async (accountId) =>
-  Account.findOne({ passportID: accountId });
+const getUserById = async (userid) => User.findOne({ _id: userid });
 
-const updateAccountById = async (filter, update) =>
-  Account.findOneAndUpdate(filter, update, { new: true });
+const updateUserById = async (filter, update) =>
+  User.findOneAndUpdate(filter, update, { new: true });
 
-module.exports = { getAccountById, updateAccountById };
+module.exports = { getUserById, updateUserById };

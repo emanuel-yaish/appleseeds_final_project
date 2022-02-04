@@ -1,16 +1,16 @@
 const express = require("express");
-const userController = require("./../controllers/accountController");
+const eventController = require("../controllers/eventController");
 
 const router = express.Router();
 
 router
   .route("")
-  .get(userController.getAllAccounts)
-  .post(userController.addAccount);
+  .get(eventController.getAllEvents)
+  .post(eventController.addEvent);
 
 router
   .route("/:accountID")
-  .get(userController.getAccount)
-  .put(userController.handleAccountAction);
+  .get(eventController.getEvent)
+  .put(eventController.updateEvent);
 
 module.exports = router;

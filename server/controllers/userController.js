@@ -1,17 +1,19 @@
-const User = require("../models/accountModel");
+const User = require("../models/userModel");
 // to check if where to use it if it is service
-const { getAccountById, updateAccountById } = require("../utils/utils");
+const { getUserById, updateUserById } = require("../utils/utils");
 const catchAsync = require("./../utils/catchAsync");
 
 const getUser = catchAsync(async (req, res) => {
   const user = await User.findOne({ _id: req.params.userid });
-  res.status(200).send({
-    status: "success",
-    results: "User details:",
-    data: {
-      account,
-    },
-  });
+
+  if (!user)
+    res.status(200).send({
+      status: "success",
+      results: "User details:",
+      data: {
+        user,
+      },
+    });
 });
 
 const addUser = catchAsync(async (req, res) => {
@@ -32,7 +34,7 @@ const updateUser = catchAsync(async (req, res) => {
   // to do take only the wanted fileds
   const userUpdatedData = req.body;
 
-  const user = await updateAccountById({ _id: userid }, userUpdatedData);
+  const user = await updateUserById({ _id: userid }, userUpdatedData);
 
   res.status(200).json({
     status: "success",
