@@ -18,9 +18,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["Male", "Female"],
   },
-  likedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  dislikedUsers: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  eventsAttended: [{ type: Schema.Types.ObjectId, ref: "Event" }],
+  isActive: {
+    type: Boolean,
+    default: false,
+  },
+  likedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  dislikedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  eventsAttended: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
 });
 
 const User = mongoose.model("User", userSchema);

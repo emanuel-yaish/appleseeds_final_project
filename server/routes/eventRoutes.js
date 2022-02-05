@@ -9,7 +9,7 @@ router
   .post(eventController.addEvent);
 
 router
-  .route("/:accountID")
+  .route("/:eventid")
   .get(eventController.getEvent)
   .put(eventController.updateEvent);
 

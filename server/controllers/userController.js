@@ -53,7 +53,7 @@ const deleteUser = catchAsync(async (req, res) => {
   });
 });
 const getAllOnlineUsers = catchAsync(async (req, res) => {
-  const users = await Users.find({ isActive: true });
+  const users = await User.find({ isActive: true });
 
   res.status(200).send({
     status: "success",
