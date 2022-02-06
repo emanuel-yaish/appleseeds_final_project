@@ -35,13 +35,14 @@ function SignPage(props) {
 
       console.log(userInput);
       const response = await liveOrDateApi.post(path, userInput);
+      console.log(response);
       if (response.data.status === "success") {
         currentFormType === steps[0]
           ? navigate("/profiles")
-          : navigate("/newprofile");
+          : navigate(`/newprofile/${response.data.data.user._id}`);
       }
     } catch (err) {
-      console.log(err.response.data);
+      console.log(err);
     }
   };
 

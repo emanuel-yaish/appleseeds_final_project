@@ -16,8 +16,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signpage" element={<SignPage />} />
-        <Route path="/newprofile" element={<NewProfilePage />} />
-        <Route path="/editprofile/:userID" element={<EditProfilePage />} />
+        <Route path="/newprofile/:userid" element={<NewProfilePage />} />
+        <Route path="/editprofile/:userid" element={<EditProfilePage />} />
         <Route path="/deleteuser" element={<DeleteUserPage />} />
         <Route path="/profiles" element={<ProfilesPage />} />
         <Route path="/datepage" element={<MatchPage />} />
