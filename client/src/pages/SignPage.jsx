@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import liveOrDateApi from "../api/liveOrDateApi";
 import StepsNav from "../components/StepsNav";
 import SignUp from "../components/SignUp";
 import SignIn from "../components/SignIn";
@@ -14,7 +15,7 @@ function SignPage(props) {
   const [userInput, setuserInput] = useState({
     email: "",
     password: "",
-    confirm: "",
+    passwordConfirm: "",
   });
 
   const handleFormTypeChange = (formType) => {
@@ -26,12 +27,22 @@ function SignPage(props) {
     setuserInput({ ...userInput, [name]: value });
   };
 
-  const sign = (e) => {
-    e.preventDefault();
+  const sign = async (e) => {
+    try {
+      e.preventDefault();
+      const path =
+        currentFormType === steps[0] ? "/users/signin" : "/users/signup";
 
-    currentFormType === steps[0]
-      ? navigate("/profiles")
-      : navigate("/newprofile");
+      console.log(userInput);
+      const response = await liveOrDateApi.post(path, userInput);
+      if (response.data.status === "success") {
+        currentFormType === steps[0]
+          ? navigate("/profiles")
+          : navigate("/newprofile");
+      }
+    } catch (err) {
+      console.log(err.response.data);
+    }
   };
 
   return (

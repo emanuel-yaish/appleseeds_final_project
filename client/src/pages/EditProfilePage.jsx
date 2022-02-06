@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import ProfilesApi from "../api/ProfilesApi";
+import liveOrDateApi from "../api/liveOrDateApi";
 import PersonalInfo from "../components/PersonalInfo";
 import Preferences from "../components/Preferences";
 import StepsNav from "../components/StepsNav";
@@ -28,7 +28,7 @@ function EditProfilePage(props) {
   useEffect(() => {
     const getProfile = async () => {
       try {
-        const response = await ProfilesApi.get(`/profiles/${params.userID}`);
+        const response = await liveOrDateApi.get(`/users/${params.userID}`);
         setuserInput(response.data);
         setSelected(response.data.hobbies);
       } catch (err) {
@@ -53,10 +53,7 @@ function EditProfilePage(props) {
     try {
       const userData = { ...userInput };
       userData.hobbies = selected;
-      const resp = await ProfilesApi.put(
-        `/profiles/${params.userID}`,
-        userData
-      );
+      const resp = await liveOrDateApi.put(`users/${params.userID}`, userData);
       console.log(resp.data);
       navigate("/profiles");
     } catch (err) {

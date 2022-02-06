@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ProfilesApi from "../api/ProfilesApi";
+import liveOrDateApi from "../api/liveOrDateApi";
 import PersonalInfo from "../components/PersonalInfo";
 import Preferences from "../components/Preferences";
 import StepsNav from "../components/StepsNav";
@@ -44,7 +44,7 @@ function NewProfilePage(props) {
     try {
       const userData = { ...userInput };
       userData.hobbies = selected;
-      const resp = await ProfilesApi.post("/profiles", userData);
+      const resp = await liveOrDateApi.post("users", userData);
       console.log(resp.data);
       navigate("/profiles");
     } catch (err) {

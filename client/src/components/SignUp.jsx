@@ -3,7 +3,7 @@ import CostumInput from "./CostumInput";
 
 function SignUp({ userInput, handleInputChange }) {
   return (
-    <div className="log-in">
+    <div className="sign-up">
       <CostumInput
         onInputChangeCallBack={handleInputChange}
         label="Email"
@@ -23,9 +23,9 @@ function SignUp({ userInput, handleInputChange }) {
       <CostumInput
         onInputChangeCallBack={handleInputChange}
         label="Confirm Password"
-        type="confirm"
-        name="confirm"
-        value={userInput.confirm}
+        type="password"
+        name="passwordConfirm"
+        value={userInput.passwordConfirm}
         id="confirm-input"
       />
     </div>

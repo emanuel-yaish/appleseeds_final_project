@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ProfilesApi from "../api/ProfilesApi";
+import liveOrDateApi from "../api/liveOrDateApi";
 import Profile from "./Profile";
 import "./Profiles.css";
 
@@ -10,8 +10,9 @@ function Profiles(props) {
   useEffect(() => {
     const getProfiles = async () => {
       try {
-        const response = await ProfilesApi.get("/profiles");
-        setProfiles(response.data);
+        const { data } = await liveOrDateApi.get("users");
+        const users = data.data.users;
+        setProfiles(users);
       } catch (err) {
         console.log(err);
       }
@@ -41,9 +42,10 @@ function Profiles(props) {
     <div className="profiles">
       {profiles
         .filter((profile) => {
+          console.log(profile);
           if (
-            likedProfiles.includes(profile.id) ||
-            dislikedProfiles.includes(profile.id)
+            likedProfiles.includes(profile._id) ||
+            dislikedProfiles.includes(profile._id)
           ) {
             console.log("contain");
             return false;
@@ -52,7 +54,7 @@ function Profiles(props) {
         })
         .map((profile) => (
           <Profile
-            key={profile.id}
+            key={profile._id}
             profile={profile}
             like={handleLike}
             dislike={handleUnlike}
