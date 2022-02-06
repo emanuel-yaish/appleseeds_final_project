@@ -16,8 +16,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/users", userRouter);
 app.use("/api/events", eventRouter);
 
-app.get("*", (req, res) => {
-  res.sendFile(publicPath);
+app.all("*", (req, res, next) => {
+  const err = new Error(`Can't find ${req.originalUrl} on this server!`);
+  err.status = "fail";
+  err.statusCode = 404;
+  next();
 });
 
 app.use((err, req, res, next) => {

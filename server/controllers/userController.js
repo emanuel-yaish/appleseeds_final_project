@@ -3,7 +3,7 @@ const User = require("../models/userModel");
 const { getUserById, updateUserById } = require("../utils/utils");
 const catchAsync = require("./../utils/catchAsync");
 
-const getUser = catchAsync(async (req, res) => {
+const getUser = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ _id: req.params.userid });
 
   if (!user)
@@ -16,7 +16,7 @@ const getUser = catchAsync(async (req, res) => {
     });
 });
 
-const addUser = catchAsync(async (req, res) => {
+const addUser = catchAsync(async (req, res, next) => {
   // to do take only the wanted fileds
   const newUserFormData = req.body;
   const newUser = await User.create(newUserFormData);
@@ -30,7 +30,7 @@ const addUser = catchAsync(async (req, res) => {
   });
 });
 
-const updateUser = catchAsync(async (req, res) => {
+const updateUser = catchAsync(async (req, res, next) => {
   // to do take only the wanted fileds
   const userUpdatedData = req.body;
 
@@ -44,7 +44,7 @@ const updateUser = catchAsync(async (req, res) => {
     },
   });
 });
-const deleteUser = catchAsync(async (req, res) => {
+const deleteUser = catchAsync(async (req, res, next) => {
   await User.deleteOne({ _id: userid });
 
   res.status(200).json({
@@ -52,8 +52,10 @@ const deleteUser = catchAsync(async (req, res) => {
     results: "user deleted",
   });
 });
-const getAllOnlineUsers = catchAsync(async (req, res) => {
-  const users = await User.find({ isActive: true });
+const getAllOnlineUsers = catchAsync(async (req, res, next) => {
+  //todo change to only onlie
+  // const users = await User.find({ isActive: true });
+  const users = await User.find();
 
   res.status(200).send({
     status: "success",
