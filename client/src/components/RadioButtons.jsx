@@ -15,7 +15,7 @@ function RadioButtons(props) {
               className="radio-buttons-input"
               type="radio"
               id={option}
-              name={mainLabel}
+              name={mainLabel.toLowerCase()}
               value={option}
             />
             <label className="radio-buttons-label" htmlFor={option}>
