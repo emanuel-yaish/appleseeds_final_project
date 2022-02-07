@@ -3,10 +3,6 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    // required: [true, "Name cannot be empty"],
-  },
   email: {
     type: String,
     required: [true, "Please provide your email"],
@@ -14,7 +10,7 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email"],
   },
-  photo: String,
+
   password: {
     type: String,
     required: [true, "password cannot be empty"],
@@ -31,10 +27,27 @@ const userSchema = new mongoose.Schema({
       },
     },
   },
-  gender: {
-    type: String,
-    enum: ["Male", "Female"],
+  personalInfo: {
+    name: {
+      type: String,
+      // required: [true, "Name cannot be empty"],
+    },
+    avatar: String,
+    gender: {
+      type: String,
+      enum: ["Male", "Female"],
+    },
+    birthday: Date,
+    location: String,
+    height: String,
+    status: {
+      type: String,
+      enum: ["Single", "Divorced", "widowed"],
+    },
+    hobbies: [],
+    about: String,
   },
+
   isActive: {
     type: Boolean,
     default: false,

@@ -17,7 +17,7 @@ function EditProfilePage(props) {
     avatar: "",
     name: "",
     gender: "",
-    birthDay: "",
+    birthday: "",
     location: "",
     height: "",
     status: "",

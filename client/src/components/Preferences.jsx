@@ -16,8 +16,8 @@ function Preferences({ userInput, handleInputChange }) {
         onInputChangeCallBack={handleInputChange}
         label="Birthday"
         type="date"
-        name="birthDay"
-        value={userInput.birthDay}
+        name="birthday"
+        value={userInput.birthday}
         id="birthday-input"
       />
       <CostumInput

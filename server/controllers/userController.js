@@ -1,19 +1,32 @@
 const User = require("../models/userModel");
+const AppError = require("../utils/appError");
 // to check if where to use it if it is service
 const { getUserById, updateUserById } = require("../utils/utils");
 const catchAsync = require("./../utils/catchAsync");
 
-const getUser = catchAsync(async (req, res, next) => {
-  const user = await User.findOne({ _id: req.params.userid });
+const filterObj = (obj, allowedFields) => {
+  const filterObj = {};
+  Object.keys(obj).forEach((el) => {
+    if (allowedFields.includes(el)) {
+      let keyName = `personalInfo.${el}`;
+      filterObj[keyName] = obj[el];
+    }
+  });
 
-  if (!user)
-    res.status(200).send({
-      status: "success",
-      results: "User details:",
-      data: {
-        user,
-      },
-    });
+  return filterObj;
+};
+
+const getUser = catchAsync(async (req, res, next) => {
+  const user = await User.findById({ _id: req.params.userid });
+  if (!user) return next(new AppError("No User found with that ID", 404));
+
+  res.status(200).send({
+    status: "success",
+    results: "User details:",
+    data: {
+      user,
+    },
+  });
 });
 
 const addUser = catchAsync(async (req, res, next) => {
@@ -31,19 +44,41 @@ const addUser = catchAsync(async (req, res, next) => {
 });
 
 const updateUser = catchAsync(async (req, res, next) => {
-  // to do take only the wanted fileds
-  const userUpdatedData = req.body;
+  if (req.body.password || req.body.passwordConfirm) {
+    return next(
+      new AppError(
+        "This route is not for password. Please use /updatePassword",
+        400
+      )
+    );
+  }
 
-  const user = await updateUserById({ _id: userid }, userUpdatedData);
+  // 2) Filtering out unwanted fields names that are not allowed to be updated
+  // to do add preferences
+  let allowedFields = Object.keys(User.schema.tree.personalInfo);
+  // if (req.body.personalInfo) allowedFields = ;
+  const filteredBody = filterObj(req.body, allowedFields);
+
+  console.log("userid: ", req.params.userid);
+  console.log(filteredBody);
+
+  // 3) Update user document
+  const updatedUser = await User.findByIdAndUpdate(
+    req.params.userid,
+    { $set: filteredBody },
+    { new: true }
+  );
+  // updateUserById({ _id: req.params.userid }, userUpdatedData);
 
   res.status(200).json({
     status: "success",
     results: "Updated user details",
     data: {
-      user,
+      updatedUser,
     },
   });
 });
+
 const deleteUser = catchAsync(async (req, res, next) => {
   await User.deleteOne({ _id: userid });
 

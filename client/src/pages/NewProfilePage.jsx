@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import liveOrDateApi from "../api/liveOrDateApi";
 import PersonalInfo from "../components/PersonalInfo";
 import Preferences from "../components/Preferences";
@@ -8,26 +8,37 @@ import StepsNav from "../components/StepsNav";
 import "./NewProfilePage.css";
 
 function NewProfilePage(props) {
-  console.log("props", props);
   let navigate = useNavigate();
-  const steps = ["PersonalInfo", "Preferences"];
-  // const formFileds = [{ fildNamge: { type: "text", name: "userName" } }];
-  // console.log(formFileds);
+  let urlParams = useParams();
+  const userid = urlParams.userid;
+  // const [user, setUser] = useState();
 
+  const steps = ["Personal Info", "Preferences"];
   const [currentFormType, setCurrentFormType] = useState(steps[0]);
   const [selected, setSelected] = useState([]);
-
   const [userInput, setuserInput] = useState({
-    avatar: "",
     name: "",
+    avatar: "",
     gender: "",
-    birthDay: "",
+    birthday: "",
     location: "",
     height: "",
     status: "",
     hobbies: "",
     about: "",
   });
+
+  // useEffect(() => {
+  //   const getProfile = async () => {
+  //     try {
+  //       const { data } = await liveOrDateApi.get(`users/${userid}`);
+  //       setUser(data.data.user);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getProfile();
+  // }, [userid]);
 
   const handleFormTypeChange = (formType) => {
     setCurrentFormType(formType);
@@ -45,7 +56,7 @@ function NewProfilePage(props) {
     try {
       const userData = { ...userInput };
       userData.hobbies = selected;
-      const resp = await liveOrDateApi.post("users", userData);
+      const resp = await liveOrDateApi.put(`users/${userid}`, userData);
       console.log(resp.data);
       navigate("/profiles");
     } catch (err) {
@@ -93,7 +104,9 @@ function NewProfilePage(props) {
               onClick={(e) => createNewProfile(e)}
               className="form-button"
             >
-              Create Profile
+              {currentFormType === steps[0]
+                ? "Save Personal Info"
+                : "Create Profile"}
             </button>
           </div>
         </form>

@@ -9,7 +9,7 @@ function Profile(props) {
   const {
     avatar,
     name,
-    birthDay,
+    birthday,
     location,
     height,
     status,
@@ -18,6 +18,7 @@ function Profile(props) {
     id,
   } = props.profile;
 
+  // todo fix problem if there is only one word or more then 2
   const [firstName, lastName] = name.split(" ");
   //to do helper function that calculate the age
   function getAge(date) {
@@ -65,7 +66,7 @@ function Profile(props) {
           <h4 className="profile-section-label">Info</h4>
           <div className="profile-info">
             <div className="profile-info-item">
-              <div className="profile-age">{getAge(birthDay)}</div>
+              <div className="profile-age">{getAge(birthday)}</div>
               <label>Age</label>
             </div>
             <div className="profile-info-item">

@@ -29,8 +29,8 @@ function PersonalInfo({ userInput, handleInputChange, selected, setSelected }) {
         onInputChangeCallBack={handleInputChange}
         label="Birthday"
         type="date"
-        name="birthDay"
-        value={userInput.birthDay}
+        name="birthday"
+        value={userInput.birthday}
         id="birthday-input"
       />
       <RadioButtons
