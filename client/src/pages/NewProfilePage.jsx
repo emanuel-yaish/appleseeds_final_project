@@ -59,7 +59,7 @@ function NewProfilePage(props) {
       userData.hobbies = selected;
       const resp = await liveOrDateApi.put(`users/${userid}`, userData);
       console.log(resp.data);
-      navigate("/profiles");
+      navigate(`/profiles/${userid}`);
     } catch (err) {
       // Handle Error Here
       console.error(err);

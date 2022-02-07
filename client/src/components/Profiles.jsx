@@ -4,8 +4,9 @@ import Profile from "./Profile";
 import "./Profiles.css";
 
 function Profiles(props) {
-  const [likedProfiles, setLikedProfiles] = useState("");
-  const [dislikedProfiles, setDislikedProfiles] = useState("");
+  const { user, setUser } = props;
+  // const [likedProfiles, setLikedProfiles] = useState("");
+  // const [dislikedProfiles, setDislikedProfiles] = useState("");
   const [profiles, setProfiles] = useState();
   useEffect(() => {
     const getProfiles = async () => {
@@ -18,15 +19,24 @@ function Profiles(props) {
       }
     };
     getProfiles();
-  }, [likedProfiles, dislikedProfiles]);
+  }, []);
+
+  const updateServerAndUser = async (updatedField) => {
+    console.log("updatedField", updatedField);
+    const { data } = await liveOrDateApi.put(`users/${user._id}`, updatedField);
+    console.log(data.data.updatedUser);
+    setUser(data.data.updatedUser);
+  };
 
   const handleLike = (id) => {
-    console.log("likedProfiles", likedProfiles);
-    setDislikedProfiles([...likedProfiles, id]);
+    const updatedUser = { ...user };
+    updatedUser.likedUsers.push(id);
+    updateServerAndUser({ likedUsers: updatedUser.likedUsers });
   };
   const handleUnlike = (id) => {
-    console.log("dislikedProfiles", dislikedProfiles);
-    setLikedProfiles([...dislikedProfiles, id]);
+    const updatedUser = { ...user };
+    updatedUser.dislikedUsers.push(id);
+    updateServerAndUser({ dislikedUsers: updatedUser.dislikedUsers });
   };
 
   if (!profiles)
@@ -44,8 +54,8 @@ function Profiles(props) {
         .filter((profile) => {
           console.log(profile);
           if (
-            likedProfiles.includes(profile._id) ||
-            dislikedProfiles.includes(profile._id)
+            user.likedUsers.includes(profile._id) ||
+            user.dislikedUsers.includes(profile._id)
           ) {
             console.log("contain");
             return false;
@@ -55,7 +65,8 @@ function Profiles(props) {
         .map((profile) => (
           <Profile
             key={profile._id}
-            profile={profile}
+            id={profile._id}
+            profile={profile.personalInfo}
             like={handleLike}
             dislike={handleUnlike}
           />

@@ -30,6 +30,10 @@
   align-items: center;
 }
 
+.profile-hobby {
+  text-transform: capitalize;
+}
+
 .profile-info div,
 .profile-hobbies div {
   margin: 0 1rem;

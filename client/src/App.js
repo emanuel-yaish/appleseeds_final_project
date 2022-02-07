@@ -19,7 +19,7 @@ function App() {
         <Route path="/newprofile/:userid" element={<NewProfilePage />} />
         <Route path="/editprofile/:userid" element={<EditProfilePage />} />
         <Route path="/deleteuser" element={<DeleteUserPage />} />
-        <Route path="/profiles" element={<ProfilesPage />} />
+        <Route path="/profiles/:userid" element={<ProfilesPage />} />
         <Route path="/datepage" element={<MatchPage />} />
         <Route path="/events" element={<EventsPage />} />
       </Routes>

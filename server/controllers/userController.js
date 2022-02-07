@@ -53,22 +53,35 @@ const updateUser = catchAsync(async (req, res, next) => {
     );
   }
 
-  // 2) Filtering out unwanted fields names that are not allowed to be updated
-  // to do add preferences
-  let allowedFields = Object.keys(User.schema.tree.personalInfo);
-  // if (req.body.personalInfo) allowedFields = ;
-  const filteredBody = filterObj(req.body, allowedFields);
+  let updatedUser = "";
+  const { likedUsers, dislikedUsers } = req.body;
 
-  console.log("userid: ", req.params.userid);
-  console.log(filteredBody);
+  if (likedUsers || dislikedUsers) {
+    const updtelikes = likedUsers
+      ? { likedUsers: req.body.likedUsers }
+      : { dislikedUsers: req.body.dislikedUsers };
 
-  // 3) Update user document
-  const updatedUser = await User.findByIdAndUpdate(
-    req.params.userid,
-    { $set: filteredBody },
-    { new: true }
-  );
-  // updateUserById({ _id: req.params.userid }, userUpdatedData);
+    updatedUser = await User.findByIdAndUpdate(req.params.userid, updtelikes, {
+      new: true,
+    });
+  } else {
+    // 2) Filtering out unwanted fields names that are not allowed to be updated
+    // to do add preferences
+    let allowedFields = Object.keys(User.schema.tree.personalInfo);
+    // if (req.body.personalInfo) allowedFields = ;
+    const filteredBody = filterObj(req.body, allowedFields);
+
+    console.log("userid: ", req.params.userid);
+    console.log(filteredBody);
+
+    // 3) Update user document
+    updatedUser = await User.findByIdAndUpdate(
+      req.params.userid,
+      { $set: filteredBody },
+      { new: true }
+    );
+    // updateUserById({ _id: req.params.userid }, userUpdatedData);
+  }
 
   res.status(200).json({
     status: "success",

@@ -38,7 +38,7 @@ function SignPage(props) {
       console.log(response);
       if (response.data.status === "success") {
         currentFormType === steps[0]
-          ? navigate("/profiles")
+          ? navigate(`/profiles/${response.data.data.user._id}`)
           : navigate(`/newprofile/${response.data.data.user._id}`);
       }
     } catch (err) {

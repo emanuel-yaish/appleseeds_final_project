@@ -6,17 +6,9 @@ import likeButton from "../assets/images/advantage.svg";
 import "./Profile.css";
 
 function Profile(props) {
-  const {
-    avatar,
-    name,
-    birthday,
-    location,
-    height,
-    status,
-    hobbies,
-    about,
-    id,
-  } = props.profile;
+  const { avatar, name, birthday, location, height, status, hobbies, about } =
+    props.profile;
+  const id = props.id;
 
   // todo fix problem if there is only one word or more then 2
   const [firstName, lastName] = name.split(" ");
@@ -39,7 +31,7 @@ function Profile(props) {
       fiveHobbies.push(hobbiesArray[index].value);
     }
     return fiveHobbies.map((hobby) => (
-      <div key={`${id}${hobby}`} className="profile-age">
+      <div key={`${id}${hobby}`} className="profile-hobby">
         {hobby}
       </div>
     ));

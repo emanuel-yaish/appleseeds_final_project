@@ -48,6 +48,9 @@ const signin = catchAsync(async (req, res, next) => {
   res.status(200).send({
     status: "success",
     token,
+    data: {
+      user,
+    },
   });
 });
 
