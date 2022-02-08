@@ -47,10 +47,16 @@ const userSchema = new mongoose.Schema({
     hobbies: [],
     about: String,
   },
-
+  preferences: {
+    maxHeight: String,
+  },
   isActive: {
     type: Boolean,
     default: false,
+  },
+  match: {
+    userid: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    matchid: String,
   },
   likedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   dislikedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],

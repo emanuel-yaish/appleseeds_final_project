@@ -27,7 +27,6 @@ function ProfilesPage(props) {
     return (
       <div className="loding-profiles">
         <h2>Loading user</h2>
-        {console.log(user)}
         <div className="lds-heart">
           <div></div>
         </div>

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import liveOrDateApi from "../api/liveOrDateApi";
 import Profile from "./Profile";
 import "./Profiles.css";
 
 function Profiles(props) {
+  let navigate = useNavigate();
   const { user, setUser } = props;
   // const [likedProfiles, setLikedProfiles] = useState("");
   // const [dislikedProfiles, setDislikedProfiles] = useState("");
@@ -24,19 +26,26 @@ function Profiles(props) {
   const updateServerAndUser = async (updatedField) => {
     console.log("updatedField", updatedField);
     const { data } = await liveOrDateApi.put(`users/${user._id}`, updatedField);
-    console.log(data.data.updatedUser);
-    setUser(data.data.updatedUser);
+    const updatedUser = data.data.updatedUser;
+    return updatedUser;
   };
 
-  const handleLike = (id) => {
-    const updatedUser = { ...user };
+  const handleLike = async (id) => {
+    let updatedUser = { ...user };
     updatedUser.likedUsers.push(id);
-    updateServerAndUser({ likedUsers: updatedUser.likedUsers });
+    updatedUser = await updateServerAndUser({
+      likedUsers: updatedUser.likedUsers,
+    });
+    console.log("updatedUser***", updatedUser);
+    if (updatedUser.match) navigate("/datepage");
   };
-  const handleUnlike = (id) => {
-    const updatedUser = { ...user };
+  const handleUnlike = async (id) => {
+    let updatedUser = { ...user };
     updatedUser.dislikedUsers.push(id);
-    updateServerAndUser({ dislikedUsers: updatedUser.dislikedUsers });
+    updatedUser = await updateServerAndUser({
+      dislikedUsers: updatedUser.dislikedUsers,
+    });
+    setUser(updatedUser);
   };
 
   if (!profiles)
@@ -52,10 +61,10 @@ function Profiles(props) {
     <div className="profiles">
       {profiles
         .filter((profile) => {
-          console.log(profile);
           if (
             user.likedUsers.includes(profile._id) ||
-            user.dislikedUsers.includes(profile._id)
+            user.dislikedUsers.includes(profile._id) ||
+            user._id === profile._id
           ) {
             console.log("contain");
             return false;

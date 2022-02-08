@@ -57,7 +57,9 @@ function NewProfilePage(props) {
     try {
       const userData = { ...userInput };
       userData.hobbies = selected;
-      const resp = await liveOrDateApi.put(`users/${userid}`, userData);
+      const resp = await liveOrDateApi.put(`users/${userid}`, {
+        personalInfo: userData,
+      });
       console.log(resp.data);
       navigate(`/profiles/${userid}`);
     } catch (err) {

@@ -4,16 +4,69 @@ const AppError = require("../utils/appError");
 const { getUserById, updateUserById } = require("../utils/utils");
 const catchAsync = require("./../utils/catchAsync");
 
-const filterObj = (obj, allowedFields) => {
+// update object without neseted objects
+const updateObj = async (obj, userid) => {
   const filterObj = {};
+  let allowedFields = Object.keys(User.schema.tree);
+
   Object.keys(obj).forEach((el) => {
     if (allowedFields.includes(el)) {
-      let keyName = `personalInfo.${el}`;
+      let keyName = el;
       filterObj[keyName] = obj[el];
     }
   });
 
-  return filterObj;
+  const updatedUser = await User.findByIdAndUpdate(userid, filterObj, {
+    new: true,
+  });
+  return updateUser;
+};
+
+// update nested objects
+const updateNestedObj = async (obj, userid, nestedFiledName) => {
+  console.log("obj", obj);
+  const filterObj = {};
+  let allowedFields = Object.keys(User.schema.tree[nestedFiledName]);
+
+  Object.keys(obj).forEach((el) => {
+    if (allowedFields.includes(el)) {
+      let keyName = `${nestedFiledName}.${el}`;
+      filterObj[keyName] = obj[el];
+    }
+  });
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userid,
+    { $set: filterObj },
+    { new: true }
+  );
+
+  return updatedUser;
+};
+
+// update
+const checkAndHandleMatch = async (userid, likedUserid) => {
+  console.log("check match", userid);
+  const likedUser = await User.findById({ _id: likedUserid });
+
+  if (likedUser.likedUsers.includes(userid)) {
+    console.log("match");
+    const matchid = new Date().valueOf();
+    const likedUseridMatch = {
+      userid: userid,
+      matchid: matchid,
+    };
+
+    updateObj({ match: likedUseridMatch }, likedUserid);
+    return {
+      match: {
+        userid: likedUserid,
+        matchid: matchid,
+      },
+    };
+  }
+
+  return {};
 };
 
 const getUser = catchAsync(async (req, res, next) => {
@@ -44,6 +97,7 @@ const addUser = catchAsync(async (req, res, next) => {
 });
 
 const updateUser = catchAsync(async (req, res, next) => {
+  // prevent from user update the password
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(
@@ -52,35 +106,31 @@ const updateUser = catchAsync(async (req, res, next) => {
       )
     );
   }
-
+  //
+  const { likedUsers, personalInfo, preferences } = req.body;
+  const userid = req.params.userid;
   let updatedUser = "";
-  const { likedUsers, dislikedUsers } = req.body;
 
-  if (likedUsers || dislikedUsers) {
-    const updtelikes = likedUsers
-      ? { likedUsers: req.body.likedUsers }
-      : { dislikedUsers: req.body.dislikedUsers };
+  console.log(req.body);
 
-    updatedUser = await User.findByIdAndUpdate(req.params.userid, updtelikes, {
-      new: true,
-    });
-  } else {
-    // 2) Filtering out unwanted fields names that are not allowed to be updated
-    // to do add preferences
-    let allowedFields = Object.keys(User.schema.tree.personalInfo);
-    // if (req.body.personalInfo) allowedFields = ;
-    const filteredBody = filterObj(req.body, allowedFields);
+  if (personalInfo || preferences) {
+    const nestedFiledName = personalInfo ? "personalInfo" : "preferences";
+    const nestedFiledValue = personalInfo ? personalInfo : preferences;
 
-    console.log("userid: ", req.params.userid);
-    console.log(filteredBody);
-
-    // 3) Update user document
-    updatedUser = await User.findByIdAndUpdate(
-      req.params.userid,
-      { $set: filteredBody },
-      { new: true }
+    updatedUser = await updateNestedObj(
+      nestedFiledValue,
+      userid,
+      nestedFiledName
     );
-    // updateUserById({ _id: req.params.userid }, userUpdatedData);
+  } else {
+    const updateData = req.body;
+
+    if (likedUsers) {
+      const match = await checkAndHandleMatch(userid, likedUsers.pop());
+      updateData.match = match;
+    }
+    console.log(updateData);
+    updatedUser = await updateObj(updateData, userid);
   }
 
   res.status(200).json({
