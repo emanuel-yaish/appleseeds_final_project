@@ -1,23 +1,23 @@
 {
-  "name": "backend",
+  "name": "appleseeds_final_project",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "This is a the final project of Appleseeds Full Stack MERN Bootcamp",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./server.js",
-    "debug": "ndb server.js"
+    "start": "node server/server.js",
+    "server": "nodemon server/server.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emanuel-yaish/appleseeds_final_project.git"
+  },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "dotenv": "^12.0.4",
-    "express": "^4.17.2",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.1.7",
-    "validator": "^13.7.0"
-  }
+  "bugs": {
+    "url": "https://github.com/emanuel-yaish/appleseeds_final_project/issues"
+  },
+  "homepage": "https://github.com/emanuel-yaish/appleseeds_final_project#readme"
 }
