@@ -1,4 +1,5 @@
 import React from "react";
+import "./MatchPage.css";
 
 function MatchPage(props) {
   console.log(props);

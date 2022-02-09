@@ -20,7 +20,7 @@ function App() {
         <Route path="/editprofile/:userid" element={<EditProfilePage />} />
         <Route path="/deleteuser" element={<DeleteUserPage />} />
         <Route path="/profiles/:userid" element={<ProfilesPage />} />
-        <Route path="/datepage" element={<MatchPage />} />
+        <Route path="/datepage/:userid" element={<MatchPage />} />
         <Route path="/events" element={<EventsPage />} />
       </Routes>
     </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import liveOrDateApi from "../api/liveOrDateApi";
 import PersonalInfo from "../components/PersonalInfo";
@@ -27,18 +27,6 @@ function NewProfilePage(props) {
     hobbies: "",
     about: "",
   });
-
-  // useEffect(() => {
-  //   const getProfile = async () => {
-  //     try {
-  //       const { data } = await liveOrDateApi.get(`users/${userid}`);
-  //       setUser(data.data.user);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   getProfile();
-  // }, [userid]);
 
   const handleFormTypeChange = (formType) => {
     setCurrentFormType(formType);
