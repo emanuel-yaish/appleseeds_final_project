@@ -37,7 +37,14 @@ function Profiles(props) {
       likedUsers: updatedUser.likedUsers,
     });
     console.log("updatedUser***", updatedUser);
-    if (updatedUser.match) navigate("/datepage");
+    console.log("updatedUser.match***", updatedUser.match);
+    setUser(updatedUser);
+    console.log("before  match!!!!");
+    if (updatedUser.match.matchid !== "") {
+      console.log("match!!!!");
+      console.log(updatedUser.match);
+      navigate("/datepage");
+    }
   };
   const handleUnlike = async (id) => {
     let updatedUser = { ...user };

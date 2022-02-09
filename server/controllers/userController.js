@@ -19,7 +19,7 @@ const updateObj = async (obj, userid) => {
   const updatedUser = await User.findByIdAndUpdate(userid, filterObj, {
     new: true,
   });
-  return updateUser;
+  return updatedUser;
 };
 
 // update nested objects
@@ -59,14 +59,15 @@ const checkAndHandleMatch = async (userid, likedUserid) => {
 
     updateObj({ match: likedUseridMatch }, likedUserid);
     return {
-      match: {
-        userid: likedUserid,
-        matchid: matchid,
-      },
+      userid: likedUserid,
+      matchid: matchid,
     };
   }
 
-  return {};
+  return {
+    userid: null,
+    matchid: "",
+  };
 };
 
 const getUser = catchAsync(async (req, res, next) => {
@@ -126,13 +127,20 @@ const updateUser = catchAsync(async (req, res, next) => {
     const updateData = req.body;
 
     if (likedUsers) {
-      const match = await checkAndHandleMatch(userid, likedUsers.pop());
+      console.log("updateData before checkandhandle", updateData);
+      const match = await checkAndHandleMatch(
+        userid,
+        likedUsers[likedUsers.length - 1]
+      );
+      console.log("updateData after checkandhandle", updateData);
       updateData.match = match;
+      console.log("updateData after add match", updateData);
     }
     console.log(updateData);
     updatedUser = await updateObj(updateData, userid);
   }
 
+  console.log("server updatedUser", updatedUser);
   res.status(200).json({
     status: "success",
     results: "Updated user details",
