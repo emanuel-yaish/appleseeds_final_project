@@ -162,7 +162,9 @@ const getAllOnlineUsers = catchAsync(async (req, res, next) => {
   //todo change to only onlie
   // const users = await User.find({ isActive: true });
   const users = await User.find();
-
+  req.io.on("connection", (socket) => {
+    socket.emit("new-message", { content: req.body.content });
+  });
   res.status(200).send({
     status: "success",
     results: users.length,
