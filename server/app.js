@@ -35,6 +35,13 @@ app.use(handleSocketIo);
 app.use("/api/users", userRouter);
 app.use("/api/events", eventRouter);
 
+io.on("connection", (socket) => {
+  socket.on("getAl", () => {
+    // CODE
+    socket.emit("all users");
+  });
+});
+
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
