@@ -22,5 +22,5 @@ For this Project I choose to build a date website.
 https://appleseeds-final-project.herokuapp.com/
 
 <a href="https://appleseeds-final-project.herokuapp.com/" target="_blank">
-  <img src="src/assets/images/react-week-project.png">
+  <img src="https://github.com/emanuel-yaish/react_week_project/blob/main/src/assets/images/react-week-project.png">
 </a>
